@@ -1,3 +1,5 @@
 from django.shortcuts import render
 
-# Create your views here.
+# Функция для главной страницы
+def index(request):
+    return render(request, 'index.html')  # Здесь предполагается, что у вас есть шаблон index.html
