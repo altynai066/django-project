@@ -1,12 +1,13 @@
-# tasks/models.py
-
 from django.db import models
 
-class Task(models.Model):
-    title = models.CharField(max_length=200)  # Название задачи
-    description = models.TextField()  # Описание задачи
-    created_at = models.DateTimeField(auto_now_add=True)  # Дата создания задачи
+class Entry(models.Model):
+    title = models.CharField(max_length=200)
+    description = models.TextField()
+    priority = models.IntegerField(choices=[(1, 'Low'), (2, 'Medium'), (3, 'High')])
+    status = models.CharField(max_length=50, choices=[('Pending', 'Pending'), ('Completed', 'Completed')])
+    category = models.CharField(max_length=50, choices=[('Work', 'Work'), ('Personal', 'Personal')])
+    created_at = models.DateTimeField(auto_now_add=True)
+
 
     def __str__(self):
-        return self.title  # Это определяет, что будет отображаться при отображении задачи в админке
-
+        return self.title

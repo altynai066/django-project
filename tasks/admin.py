@@ -1,10 +1,8 @@
 from django.contrib import admin
-from .models import Task
+from .models import Entry
 
-@admin.register(Task)
-class TaskAdmin(admin.ModelAdmin):
-    list_display = ('title', 'created_at')  # Поля, которые будут отображаться в списке задач
-    search_fields = ('title',)  # Поиск по названию задачи
-    list_filter = ('created_at',)  # Фильтр по дате создания задачи
-
-
+@admin.register(Entry)
+class EntryAdmin(admin.ModelAdmin):
+    list_display = ('title', 'description', 'priority', 'status', 'category', 'created_at')
+    list_filter = ('category', 'priority', 'status')
+    search_fields = ('title', 'description')

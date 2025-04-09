@@ -36,7 +36,11 @@ INSTALLED_APPS = [
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
-    'django.contrib.staticfiles','tasks',
+    'django.contrib.staticfiles',
+    'tasks',
+    'django.contrib.sites',
+    'django_otp',
+    'two_factor',
 ]
 
 MIDDLEWARE = [
@@ -47,7 +51,9 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'django_otp.middleware.OTPMiddleware',
 ]
+LOGIN_URL = 'two_factor:login'
 
 ROOT_URLCONF = 'PythonProjectMindSafe.urls'
 
@@ -121,3 +127,14 @@ STATIC_URL = 'static/'
 # https://docs.djangoproject.com/en/5.1/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+AUTHENTICATION_BACKENDS = (
+    'django.contrib.auth.backends.ModelBackend',  # По умолчанию
+)
+
+# Использовать email в качестве имени пользователя
+AUTHENTICATION_BACKENDS = (
+    'django.contrib.auth.backends.ModelBackend',
+)
+
+# Если нужно настроить систему для работы только через email:
+AUTH_USER_MODEL = 'auth.User'  # или ваша кастомная модель пользователя
