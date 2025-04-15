@@ -1,4 +1,11 @@
+{% extends 'base.html' %}
+
+{% block title %}Профиль{% endblock %}
+
+{% block content %}
 <h2>Мои заметки</h2>
+
+<!-- Сообщения (для уведомлений) -->
 {% if messages %}
   <ul class="messages">
     {% for message in messages %}
@@ -7,8 +14,7 @@
   </ul>
 {% endif %}
 
-
-<!-- Проверка на наличие заметок -->
+<!-- Список заметок -->
 {% if notes %}
     <ul>
         {% for note in notes %}
@@ -32,3 +38,4 @@
 
 <!-- Кнопка для создания новой заметки -->
 <a href="{% url 'create_entry' %}" style="display: inline-block; margin-top: 20px;">➕ Добавить новую заметку</a>
+{% endblock %}
