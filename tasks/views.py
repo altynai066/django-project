@@ -60,32 +60,37 @@ def create_entry(request):
         form = EntryForm(request.POST)
         if form.is_valid():
             entry = form.save(commit=False)
-            entry.user = request.user  # Привязываем заметку к текущему пользователю
+            entry.user = request.user
             entry.save()
-            messages.success(request, 'Заметка успешно создана!')
-            return redirect('user_profile')  # После создания возвращаем в профиль
+            messages.success(request, 'Заметка успешно создана!')  # ← Добавляем здесь
+            return redirect('user_profile')
     else:
         form = EntryForm()
     return render(request, 'create_entry.html', {'form': form})
 
 @login_required
 def edit_entry(request, pk):
-    entry = get_object_or_404(Entry, id=pk, user=request.user)  # Проверяем, что заметка принадлежит текущему пользователю
+    entry = Entry.objects.get(id=pk)
+    if request.user != entry.user:
+        return redirect('user_profile')
 
     if request.method == 'POST':
         form = EntryForm(request.POST, instance=entry)
         if form.is_valid():
             form.save()
-            messages.success(request, 'Заметка успешно обновлена!')
+            messages.success(request, 'Заметка успешно обновлена!')  # ← Тут
             return redirect('user_profile')
     else:
         form = EntryForm(instance=entry)
 
     return render(request, 'edit_entry.html', {'form': form})
 
+
 @login_required
 def delete_entry(request, pk):
-    entry = get_object_or_404(Entry, id=pk, user=request.user)  # Проверяем, что заметка принадлежит текущему пользователю
-    entry.delete()
-    messages.success(request, 'Заметка удалена.')
+    entry = Entry.objects.get(id=pk)
+    if request.user == entry.user:
+        entry.delete()
+        messages.success(request, 'Заметка удалена.')  # ← И вот здесь
     return redirect('user_profile')
+
