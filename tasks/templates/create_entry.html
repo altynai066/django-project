@@ -1,0 +1,9 @@
+<h2>Создать заметку</h2>
+
+<form method="POST">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit">Сохранить</button>
+</form>
+
+<a href="{% url 'user_profile' %}">Назад в профиль</a>
