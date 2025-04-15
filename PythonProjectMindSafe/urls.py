@@ -25,4 +25,6 @@ urlpatterns = [
     path('', views.home, name='home'),
     path('profile/', views.user_profile, name='user_profile'),
     path('create-entry/', views.create_entry, name='create_entry'),  # ← Вот это добавляем
+    path('edit-entry/<int:pk>/', views.edit_entry, name='edit_entry'),
+    path('delete-entry/<int:pk>/', views.delete_entry, name='delete_entry'),
 ]
