@@ -20,7 +20,8 @@ class Entry(models.Model):
     description = models.TextField(null=True, blank=True)  # Добавить описание
     priority = models.CharField(max_length=50, null=True, blank=True)  # Добавить приоритет
     status = models.CharField(max_length=50, null=True, blank=True)  # Добавить статус
-    category = models.ForeignKey(Category, on_delete=models.SET_NULL, null=True, blank=True)  # Категория через ForeignKey
+    category = models.ForeignKey(Category, on_delete=models.SET_NULL, null=True, blank=True)  # Проверь, что здесь есть ForeignKey
+    # Категория через ForeignKey
     tags = models.ManyToManyField(Tag, blank=True)  # Связь с тегами через ManyToManyField
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
@@ -29,3 +30,5 @@ class Entry(models.Model):
 
     def __str__(self):
         return self.title
+    class Meta:
+        ordering = ['-created_at']

@@ -7,6 +7,7 @@ class Migration(migrations.Migration):
     ]
 
     operations = [
+        # Обновляем модель Entry
         migrations.CreateModel(
             name='Entry',
             fields=[
@@ -14,7 +15,9 @@ class Migration(migrations.Migration):
                 ('title', models.CharField(max_length=200)),
                 ('description', models.TextField()),
                 ('created_at', models.DateTimeField(auto_now_add=True)),
-                ('category', models.CharField(blank=True, max_length=100, null=True)),
+                ('category', models.ForeignKey(
+                    on_delete=models.SET_NULL, null=True, blank=True, to='tasks.Category')
+                ),  # Добавляем связь с моделью Category
                 ('priority', models.CharField(choices=[('High', 'Высокий'), ('Medium', 'Средний'), ('Low', 'Низкий')], default='Medium', max_length=10)),
                 ('status', models.CharField(choices=[('Draft', 'Черновик'), ('Published', 'Опубликовано')], default='Draft', max_length=20)),
             ],
@@ -22,7 +25,7 @@ class Migration(migrations.Migration):
                 'ordering': ['-created_at'],
             },
         ),
-        # Удаляем ссылку на устаревшую модель Task
+        # Если была старая модель Task, её можно удалить, если она уже не нужна
         # migrations.DeleteModel(
         #     name='Task',
         # ),
