@@ -1,0 +1,21 @@
+<!-- tasks/templates/tasks/entry_list.html -->
+<form method="GET">
+    <select name="category">
+        <option value="">Все категории</option>
+        {% for category in categories %}
+            <option value="{{ category.name }}">{{ category.name }}</option>
+        {% endfor %}
+    </select>
+    <select name="tag">
+        <option value="">Все теги</option>
+        {% for tag in tags %}
+            <option value="{{ tag.name }}">{{ tag.name }}</option>
+        {% endfor %}
+    </select>
+    <button type="submit">Фильтровать</button>
+</form>
+
+{% for entry in entries %}
+    <h3>{{ entry.title }}</h3>
+    <p>{{ entry.content }}</p>
+{% endfor %}

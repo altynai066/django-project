@@ -1,0 +1,11 @@
+<!-- tasks/templates/tasks/entry_detail.html -->
+{% if entry.password %}
+    <form method="POST">
+        {% csrf_token %}
+        <input type="password" name="password" placeholder="Введите пароль">
+        <button type="submit">Подтвердить</button>
+    </form>
+{% else %}
+    <h1>{{ entry.title }}</h1>
+    <p>{{ entry.content }}</p>
+{% endif %}

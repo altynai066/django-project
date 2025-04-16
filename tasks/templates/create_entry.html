@@ -2,7 +2,23 @@
 
 <form method="POST">
     {% csrf_token %}
-    {{ form.as_p }}
+    {{ form.non_field_errors }}
+
+    <label for="id_title">Название:</label>
+    {{ form.title }}
+
+    <label for="id_content">Содержание:</label>
+    {{ form.content }}
+
+    <label for="id_category">Категория:</label>
+    {{ form.category }}
+
+    <label for="id_tags">Теги:</label>
+    {{ form.tags }}
+
+    <label for="id_password">Пароль (если нужен):</label>
+    {{ form.password }}
+
     <button type="submit">Сохранить</button>
 </form>
 
