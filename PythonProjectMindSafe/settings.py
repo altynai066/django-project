@@ -60,7 +60,7 @@ ROOT_URLCONF = 'PythonProjectMindSafe.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [BASE_DIR / "templates"],
+        'DIRS': [BASE_DIR / "templates"w],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [

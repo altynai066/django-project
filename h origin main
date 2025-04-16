@@ -1,0 +1,132 @@
+[33mcommit 89fdcd27cedfff49093548d4f575ded15bc9f55c[m[33m ([m[1;36mHEAD[m[33m -> [m[1;32mmain[m[33m)[m
+Author: Mahabbat07 <toktarmahabbat507@gmail.com>
+Date:   Wed Apr 16 08:58:14 2025 +0500
+
+    Добавлен новый шаблон для страницы двухфакторной аутентификации
+
+[33mcommit a8423a8df60b079516cd8e9bf8d4985c6fde8a22[m[33m ([m[1;31morigin/main[m[33m, [m[1;31morigin/HEAD[m[33m)[m
+Merge: 4130c3c a10131f
+Author: altynai066 <altynaiserikbai4@gmail.com>
+Date:   Wed Apr 16 01:19:21 2025 +0600
+
+    Merge pull request #4 from altynai066/lab2-crud
+    
+    Lab2 crud
+
+[33mcommit a10131f1c182fc3ed945020e1e2f47d1d416d733[m
+Author: altynai066 <altynaiserikbai4@gmail.com>
+Date:   Wed Apr 16 00:16:58 2025 +0600
+
+    Добавлены сообщения при создании, редактировании и удалении заметки
+
+[33mcommit 4a17e4d0bbc86671343a020cbab75fd6c1a6b56f[m
+Author: altynai066 <altynaiserikbai4@gmail.com>
+Date:   Wed Apr 16 00:10:31 2025 +0600
+
+    Добавлена форма создания заметок и страница create-entry
+
+[33mcommit 651ce1947dbbefde9a7c9245b7961b6d04ad7099[m
+Author: altynai066 <altynaiserikbai4@gmail.com>
+Date:   Tue Apr 15 22:42:47 2025 +0600
+
+    Обновлены миграции для модели Entry, добавлены новые поля
+
+[33mcommit 3a3363cf2264a16db65a09a5ecc2b0479a516e12[m
+Author: altynai066 <altynaiserikbai4@gmail.com>
+Date:   Tue Apr 15 22:17:08 2025 +0600
+
+    Добавлен маршрут create-entry для создания заметок
+
+[33mcommit f2469159c898684caf797f3a5cd739f5588765b3[m
+Author: altynai066 <altynaiserikbai4@gmail.com>
+Date:   Tue Apr 15 22:13:39 2025 +0600
+
+    Добавлена кнопка для создания заметки на страницу профиля
+
+[33mcommit cac7c81277b9a0184ec4e27edec07091f322e88b[m
+Author: altynai066 <altynaiserikbai4@gmail.com>
+Date:   Tue Apr 15 22:10:22 2025 +0600
+
+    Добавлен шаблон create_entry.html для создания заметок
+
+[33mcommit 4bdfeb731ab907204fdf185f0588d27c35137aac[m
+Author: altynai066 <altynaiserikbai4@gmail.com>
+Date:   Tue Apr 15 22:08:18 2025 +0600
+
+    Добавлена вьюха create_entry для создания заметок
+
+[33mcommit 9832ef9115eef2ecbcb19be88dc64f13786c5356[m
+Author: altynai066 <altynaiserikbai4@gmail.com>
+Date:   Tue Apr 15 21:39:43 2025 +0600
+
+    Начальная версия проекта
+
+[33mcommit 4130c3c1d572ec308b511f461888d6b363162855[m
+Merge: 5df1603 8a544cb
+Author: altynai066 <altynaiserikbai4@gmail.com>
+Date:   Wed Apr 9 12:49:51 2025 +0600
+
+    Merge pull request #3 from altynai066/lab2-crud
+    
+    Добавлены новые миграции, изменены файлы настроек и шаблоны для регитраций
+
+[33mcommit 8a544cbaba35c56935eae1c8018b4cb9c9d0f71c[m
+Author: altynai066 <altynaiserikbai4@gmail.com>
+Date:   Wed Apr 9 11:42:36 2025 +0600
+
+    Добавлены новые миграции, изменены файлы настроек и шаблоны для регистрации
+
+[33mcommit 5df160386d719d33e1c9070dc50b7aee5dfe513f[m
+Merge: 5cf67f9 81f494a
+Author: altynai066 <altynaiserikbai4@gmail.com>
+Date:   Wed Apr 2 16:38:54 2025 +0600
+
+    Merge pull request #2 from altynai066/lab2-crud
+    
+    Исправление:исключение venv из репозиторий
+
+[33mcommit 81f494acd1fa6997f54a2b8b237e33616c2c3752[m
+Author: altynai066 <altynaiserikbai4@gmail.com>
+Date:   Wed Apr 2 15:34:42 2025 +0600
+
+    Исправление:исключение venv из репозиторий
+
+[33mcommit 5cf67f9319e0865325bdc1a2d277a8ff18de1c62[m
+Merge: f11d0ea fe304f6
+Author: mahabbat07 <toktarmahabbat507@gmail.com>
+Date:   Wed Apr 2 12:21:02 2025 +0500
+
+    Merge pull request #1 from altynai066/feature-authentication
+    
+    Feature authentication
+
+[33mcommit fe304f6d29e2de0f46c3e38675908b6da529815c[m[33m ([m[1;31morigin/feature-authentication[m[33m)[m
+Author: altynai066 <altynaiserikbai4@gmail.com>
+Date:   Wed Apr 2 11:39:43 2025 +0600
+
+    Added .gitignore to exclude unnecessary files
+
+[33mcommit bc8acc0c0d6af30d8ac59e91736b766295e0a098[m
+Author: altynai066 <altynaiserikbai4@gmail.com>
+Date:   Wed Apr 2 11:29:21 2025 +0600
+
+    Added authentication
+
+[33mcommit f11d0ea390070b9b5a989d1f87df679de06c40c9[m
+Merge: f926e8a fc43b3e
+Author: Mahabbat07 <toktarmahabbat507@gmail.com>
+Date:   Sun Mar 30 20:53:56 2025 +0500
+
+    Merge branch 'main' of https://github.com/altynai066/django-project
+
+[33mcommit f926e8a1b866a49a0ccd00b39c580d34c9baa8f1[m
+Author: Mahabbat07 <toktarmahabbat507@gmail.com>
+Date:   Sun Mar 30 20:51:02 2025 +0500
+
+    Initial commit
+
+[33mcommit fc43b3eec9efce620ae6a5f451cc26bca5d1d52a[m
+Author: altynai066 <altynaiserikbai4@gmail.com>
+Date:   Sun Mar 30 20:47:58 2025 +0600
+
+    Create main
