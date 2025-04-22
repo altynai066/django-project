@@ -30,9 +30,33 @@
 {% endif %}
 
 <!-- Форма для фильтрации заметок -->
-<form method="get" style="margin-top: 20px;">
-    <input type="text" name="q" placeholder="Поиск по заголовку" value="{{ query }}">
+<form method="get" class="form-inline" style="margin-top: 20px;">
+    <!-- Поиск по названию -->
+    <input type="text" name="q" value="{{ query }}" placeholder="Поиск по заголовку">
+
+    <!-- Фильтрация по дате -->
     <input type="date" name="filter_date" value="{{ filter_date }}">
+
+    <!-- Фильтрация по категории -->
+    <select name="category">
+        <option value="">Все категории</option>
+        {% for category in categories %}
+            <option value="{{ category }}" {% if category == request.GET.category %}selected{% endif %}>
+                {{ category }}
+            </option>
+        {% endfor %}
+    </select>
+
+    <!-- Фильтрация по тегам -->
+    <select name="tags">
+        <option value="">Все теги</option>
+        {% for tag in tags %}
+            <option value="{{ tag }}" {% if tag == request.GET.tags %}selected{% endif %}>
+                {{ tag }}
+            </option>
+        {% endfor %}
+    </select>
+
     <button type="submit">Фильтровать</button>
 </form>
 

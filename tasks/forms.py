@@ -14,4 +14,4 @@ class CustomUserCreationForm(UserCreationForm):
 class EntryForm(forms.ModelForm):
     class Meta:
         model = Entry
-        fields = ['title', 'content', 'description', 'priority', 'status', 'category']
+        fields = ['title', 'content', 'description', 'priority', 'status', 'category','tags']

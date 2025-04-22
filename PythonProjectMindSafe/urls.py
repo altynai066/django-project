@@ -6,7 +6,7 @@ from tasks import views  # Импортируем views из приложени�
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-
+    path('', include('tasks.urls')),
     # Аутентификация
     path('login/', auth_views.LoginView.as_view(), name='login'),
     path('logout/', auth_views.LogoutView.as_view(), name='logout'),
@@ -27,4 +27,7 @@ urlpatterns = [
     path('create-entry/', views.create_entry, name='create_entry'),  # ← Вот это добавляем
     path('edit-entry/<int:pk>/', views.edit_entry, name='edit_entry'),
     path('delete-entry/<int:pk>/', views.delete_entry, name='delete_entry'),
+    path('category/<int:category_id>/', views.entries_by_category, name='entries_by_category'),
+    path('tag/<int:tag_id>/', views.entries_by_tag, name='entries_by_tag'),
+
 ]
