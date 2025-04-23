@@ -1,9 +1,78 @@
-<h2>Создать заметку</h2>
+{% extends 'base.html' %}
+{% load static %}
 
-<form method="POST">
-    {% csrf_token %}
-    {{ form.as_p }}
-    <button type="submit">Сохранить</button>
+{% block title %}Создание заметки{% endblock %}
+
+{% block content %}
+<h2 style="color: #008b8b;">➕ Новая заметка</h2>
+
+<form method="post">
+  {% csrf_token %}
+  <div class="form-wrapper">
+    {{ form.non_field_errors }}
+    {% for field in form %}
+      <div class="form-group">
+        {{ field.label_tag }}<br>
+        {{ field }}
+        {% if field.help_text %}
+          <small class="form-text">{{ field.help_text }}</small>
+        {% endif %}
+        {% for error in field.errors %}
+          <div class="form-error">{{ error }}</div>
+        {% endfor %}
+      </div>
+    {% endfor %}
+    <button type="submit">💾 Сохранить</button>
+  </div>
 </form>
 
-<a href="{% url 'user_profile' %}">Назад в профиль</a>
+<style>
+  .form-wrapper {
+    max-width: 500px;
+    padding: 20px;
+    border-radius: 15px;
+    background-color: #f0fafa;
+    box-shadow: 0 0 10px rgba(0, 139, 139, 0.2);
+  }
+
+  .form-group {
+    margin-bottom: 15px;
+  }
+
+  label {
+    font-weight: bold;
+    color: #006666;
+  }
+
+  input, textarea, select {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #cce7e7;
+    border-radius: 8px;
+  }
+
+  button {
+    background-color: #008b8b;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+  }
+
+  button:hover {
+    background-color: #006666;
+  }
+
+  .form-error {
+    color: red;
+    font-size: 0.9em;
+  }
+
+  .form-text {
+    font-size: 0.85em;
+    color: #666;
+  }
+</style>
+{% endblock %}
+

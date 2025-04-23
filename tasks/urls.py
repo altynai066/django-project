@@ -1,6 +1,6 @@
 from django.urls import path
 from . import views
-
+from two_factor.urls import urlpatterns as tf_urls
 urlpatterns = [
     path('', views.home, name='home'),  # Главная страница
     path('login/', views.login_view, name='login'),
@@ -11,5 +11,6 @@ urlpatterns = [
     path('profile/', views.user_profile, name='user_profile'),
     path('category/<int:category_id>/', views.entries_by_category, name='entries_by_category'),
     path('tag/<int:tag_id>/', views.entries_by_tag, name='entries_by_tag'),
+
 ]
 

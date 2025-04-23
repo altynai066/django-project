@@ -1,5 +1,6 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from .models import Entry
+from .forms import EntryForm
 from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.auth import authenticate, login
 from django.contrib.auth.forms import UserCreationForm
@@ -8,10 +9,14 @@ from django.contrib.auth.decorators import login_required
 from django.db.models import Q
 from django.contrib import messages
 from .models import Entry, Category, Tag  # Импортируем модели категорий и тегов
-
+from django.contrib.auth.decorators import login_required
 def home(request):
-    tasks = Entry.objects.all()
+    if request.user.is_authenticated:
+        tasks = Entry.objects.filter(user=request.user)
+    else:
+        tasks = []  # Гостям не показываем записи, можно сделать публичные, если захочешь
     return render(request, 'home.html', {'tasks': tasks})
+
 
 def login_view(request):
     if request.method == 'POST':
@@ -28,13 +33,12 @@ def register_view(request):
     if request.method == 'POST':
         form = CustomUserCreationForm(request.POST)
         if form.is_valid():
-            form.save()
-            return redirect('login')
+            user = form.save()
+            login(request, user)  # ← автоматический вход
+            return redirect('home')  # перенаправление на главную или профиль
     else:
         form = CustomUserCreationForm()
     return render(request, 'registration/register.html', {'form': form})
-
-
 
 @login_required
 def create_entry(request):
@@ -49,13 +53,19 @@ def create_entry(request):
             return redirect('user_profile')
     else:
         form = EntryForm()
-    return render(request, 'create_entry.html', {'form': form})
+
+    categories = Category.objects.all()
+    tags = Tag.objects.all()
+
+    return render(request, 'create_entry.html', {
+        'form': form,
+        'categories': categories,
+        'tags': tags,
+    })
 
 @login_required
-def edit_entry(request, pk):
-    entry = get_object_or_404(Entry, id=pk)
-    if request.user != entry.user:
-        return redirect('user_profile')
+def edit_entry(request, entry_id):
+    entry = get_object_or_404(Entry, id=entry_id, user=request.user)
 
     if request.method == 'POST':
         form = EntryForm(request.POST, instance=entry)
@@ -66,7 +76,15 @@ def edit_entry(request, pk):
     else:
         form = EntryForm(instance=entry)
 
-    return render(request, 'edit_entry.html', {'form': form})
+    categories = Category.objects.all()
+    tags = Tag.objects.all()
+
+    return render(request, 'edit_entry.html', {
+        'form': form,
+        'entry': entry,
+        'categories': categories,
+        'tags': tags,
+    })
 
 @login_required
 def delete_entry(request, pk):
@@ -82,7 +100,6 @@ def delete_entry(request, pk):
 def user_profile(request):
     # Получаем все заметки пользователя
     notes = Entry.objects.filter(user=request.user)
-
     query = request.GET.get('q', '')
     filter_date = request.GET.get('filter_date', '')
     selected_category = request.GET.get('category', '')

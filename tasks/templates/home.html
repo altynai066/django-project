@@ -1,20 +1,75 @@
-<!-- home.html (в папке tasks/templates) -->
+{% extends 'base.html' %}
 
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Главная страница</title>
-</head>
-<body>
+{% block title %}Главная{% endblock %}
+
+{% block content %}
+<style>
+    body {
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        background-color: #f4fefe;
+        color: #333;
+        margin: 0;
+        padding: 0;
+    }
+
+    .container {
+        max-width: 800px;
+        margin: 40px auto;
+        background-color: #ffffff;
+        padding: 30px;
+        border-radius: 12px;
+        box-shadow: 0 4px 10px rgba(0, 128, 128, 0.1);
+    }
+
+    h1 {
+        color: #008b8b;
+        border-bottom: 2px solid #c0f0f0;
+        padding-bottom: 10px;
+    }
+
+    ul {
+        list-style-type: none;
+        padding: 0;
+    }
+
+    li {
+        background-color: #e6fafa;
+        margin-bottom: 10px;
+        padding: 15px;
+        border-radius: 8px;
+        box-shadow: 0 1px 3px rgba(0, 128, 128, 0.1);
+    }
+
+    .message {
+        font-size: 1.1rem;
+        color: #555;
+    }
+
+    a {
+        color: #008b8b;
+        text-decoration: none;
+        font-weight: bold;
+    }
+
+    a:hover {
+        text-decoration: underline;
+    }
+</style>
+
+<div class="container">
     <h1>Список задач</h1>
-    <ul>
-        {% for task in tasks %}
-            <li>{{ task.title }} - {{ task.created_at }}</li>
-        {% empty %}
-            <li>Задачи не найдены</li>
-        {% endfor %}
-    </ul>
-</body>
-</html>
+
+    {% if user.is_authenticated %}
+        <ul>
+            {% for task in tasks %}
+                <li>{{ task.title }} — {{ task.created_at|date:"d.m.Y H:i" }}</li>
+            {% empty %}
+                <li class="message">Задачи не найдены</li>
+            {% endfor %}
+        </ul>
+    {% else %}
+        <p class="message">Вы не вошли в систему. <a href="{% url 'login' %}">Войти</a> или <a href="{% url 'register' %}">зарегистрироваться</a>, чтобы увидеть свои задачи.</p>
+    {% endif %}
+</div>
+{% endblock %}
+

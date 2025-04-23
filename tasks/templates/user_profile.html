@@ -3,63 +3,167 @@
 {% block title %}Профиль{% endblock %}
 
 {% block content %}
-<h2>Мои заметки</h2>
 
-<!-- Сообщения (для уведомлений) -->
-{% if messages %}
-  <ul class="messages">
-    {% for message in messages %}
-      <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
-    {% endfor %}
-  </ul>
-{% endif %}
+<style>
+    body {
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        background-color: #f4fefe;
+        color: #333;
+        margin: 0;
+        padding: 0;
+    }
 
-<!-- Список заметок -->
-{% if notes %}
-    <ul>
-        {% for note in notes %}
-            <li>
-                <strong>{{ note.title }}</strong> — {{ note.created_at|date:"d.m.Y H:i" }}
-                <a href="{% url 'edit_entry' note.id %}">✏️ Редактировать</a>
-                <a href="{% url 'delete_entry' note.id %}" onclick="return confirm('Вы уверены, что хотите удалить эту заметку?')">🗑️ Удалить</a>
-            </li>
+    .container {
+        max-width: 800px;
+        margin: 40px auto;
+        background-color: #ffffff;
+        padding: 30px;
+        border-radius: 12px;
+        box-shadow: 0 4px 10px rgba(0, 128, 128, 0.1);
+    }
+
+    h2 {
+        font-size: 24px;
+        border-bottom: 2px solid #00bfa6;
+        padding-bottom: 10px;
+        color: #008b8b;
+        margin-bottom: 25px;
+    }
+
+    .messages {
+        list-style: none;
+        padding: 0;
+        margin-bottom: 20px;
+    }
+
+    .messages li {
+        background: #e6fafa;
+        border-left: 5px solid #00bfa6;
+        padding: 12px;
+        margin-bottom: 10px;
+        border-radius: 6px;
+    }
+
+    ul.notes-list {
+        list-style: none;
+        padding: 0;
+    }
+
+    ul.notes-list li {
+        background: #e6fafa;
+        border: 1px solid #b2dfdb;
+        padding: 15px;
+        margin-bottom: 10px;
+        border-radius: 8px;
+        box-shadow: 0 1px 3px rgba(0, 128, 128, 0.1);
+    }
+
+    ul.notes-list strong {
+        color: #007f72;
+    }
+
+    a {
+        color: #008b8b;
+        text-decoration: none;
+        margin-left: 10px;
+        font-weight: bold;
+    }
+
+    a:hover {
+        text-decoration: underline;
+    }
+
+    .form-inline {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 10px;
+        margin: 20px 0;
+    }
+
+    .form-inline input,
+    .form-inline select,
+    .form-inline button {
+        padding: 10px;
+        border: 1px solid #b2dfdb;
+        border-radius: 6px;
+        font-size: 14px;
+    }
+
+    .form-inline button {
+        background-color: #00bfa6;
+        color: #fff;
+        border: none;
+        cursor: pointer;
+        transition: background-color 0.3s;
+    }
+
+    .form-inline button:hover {
+        background-color: #009e8f;
+    }
+
+    .add-note-btn {
+        display: inline-block;
+        margin-top: 20px;
+        padding: 12px 18px;
+        background-color: #00bfa6;
+        color: #fff;
+        border-radius: 6px;
+        text-decoration: none;
+        font-weight: bold;
+    }
+
+    .add-note-btn:hover {
+        background-color: #009e8f;
+    }
+</style>
+
+<div class="container">
+    <h2>Мои заметки</h2>
+
+    {% if messages %}
+      <ul class="messages">
+        {% for message in messages %}
+          <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
         {% endfor %}
-    </ul>
-{% else %}
-    <p>У вас нет заметок.</p>
-{% endif %}
+      </ul>
+    {% endif %}
 
-<!-- Форма для фильтрации заметок -->
-<form method="get" class="form-inline" style="margin-top: 20px;">
-    <!-- Поиск по названию -->
-    <input type="text" name="q" value="{{ query }}" placeholder="Поиск по заголовку">
+    {% if notes %}
+      <ul class="notes-list">
+        {% for note in notes %}
+          <li>
+            <strong>{{ note.title }}</strong> — {{ note.created_at|date:"d.m.Y H:i" }}
+            <a href="{% url 'edit_entry' note.id %}">✏️</a>
+            <a href="{% url 'delete_entry' note.id %}" onclick="return confirm('Вы уверены, что хотите удалить эту заметку?')">🗑️</a>
+          </li>
+        {% endfor %}
+      </ul>
+    {% else %}
+      <p>У вас нет заметок.</p>
+    {% endif %}
 
-    <!-- Фильтрация по дате -->
-    <input type="date" name="filter_date" value="{{ filter_date }}">
+    <form method="get" class="form-inline">
+      <input type="text" name="q" value="{{ query }}" placeholder="Поиск по заголовку">
+      <input type="date" name="filter_date" value="{{ filter_date }}">
 
-    <!-- Фильтрация по категории -->
-    <select name="category">
+      <select name="category">
         <option value="">Все категории</option>
         {% for category in categories %}
-            <option value="{{ category }}" {% if category == request.GET.category %}selected{% endif %}>
-                {{ category }}
-            </option>
+          <option value="{{ category }}" {% if category == request.GET.category %}selected{% endif %}>{{ category }}</option>
         {% endfor %}
-    </select>
+      </select>
 
-    <!-- Фильтрация по тегам -->
-    <select name="tags">
+      <select name="tags">
         <option value="">Все теги</option>
         {% for tag in tags %}
-            <option value="{{ tag }}" {% if tag == request.GET.tags %}selected{% endif %}>
-                {{ tag }}
-            </option>
+          <option value="{{ tag }}" {% if tag == request.GET.tags %}selected{% endif %}>{{ tag }}</option>
         {% endfor %}
-    </select>
+      </select>
 
-    <button type="submit">Фильтровать</button>
-</form>
+      <button type="submit">Фильтровать</button>
+    </form>
 
-<!-- Кнопка для создания новой заметки -->
-<a href="{% url 'create_entry' %}" style="display: inline-block; margin-top: 20px;">➕ Добавить новую заметку</a>
+    <a href="{% url 'create_entry' %}" class="add-note-btn">➕ Добавить новую заметку</a>
+</div>
+
 {% endblock %}

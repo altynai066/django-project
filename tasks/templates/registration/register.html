@@ -1,31 +1,48 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ru">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Register - MindSafe</title>
+    <title>Регистрация — MindSafe</title>
+
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+
     <style>
         body {
-            font-family: Arial, sans-serif;
+            font-family: 'Poppins', sans-serif;
             background-color: #e0f7fa;
             color: #00796b;
             margin: 0;
             padding: 0;
+            animation: fadeIn 1s ease-in-out;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
         }
 
         .container {
             max-width: 500px;
-            margin: 50px auto;
+            margin: 60px auto;
             background-color: #ffffff;
-            padding: 20px;
-            border-radius: 8px;
-            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            padding: 30px 25px;
+            border-radius: 12px;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+            animation: slideUp 0.7s ease;
+        }
+
+        @keyframes slideUp {
+            from { transform: translateY(30px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
         }
 
         h1 {
             text-align: center;
             color: #004d40;
             margin-bottom: 30px;
+            font-weight: 600;
         }
 
         .form-group {
@@ -33,29 +50,39 @@
         }
 
         label {
-            font-weight: bold;
+            font-weight: 600;
             color: #004d40;
+            display: block;
+            margin-bottom: 6px;
         }
 
-        input[type="text"], input[type="email"], input[type="password"] {
+        input[type="text"],
+        input[type="email"],
+        input[type="password"] {
             width: 100%;
-            padding: 10px;
-            margin-top: 5px;
+            padding: 12px;
             border: 1px solid #00796b;
-            border-radius: 4px;
-            font-size: 16px;
+            border-radius: 6px;
+            font-size: 15px;
+            transition: border-color 0.3s ease;
+        }
+
+        input:focus {
+            border-color: #004d40;
+            outline: none;
         }
 
         button {
             width: 100%;
-            padding: 10px;
+            padding: 12px;
             background-color: #00796b;
             color: white;
             border: none;
-            border-radius: 4px;
-            font-size: 18px;
+            border-radius: 6px;
+            font-size: 17px;
+            font-weight: 600;
             cursor: pointer;
-            transition: background-color 0.3s;
+            transition: background-color 0.3s ease;
         }
 
         button:hover {
@@ -64,49 +91,79 @@
 
         .link {
             text-align: center;
-            margin-top: 10px;
+            margin-top: 18px;
         }
 
         .link a {
             color: #00796b;
             text-decoration: none;
+            font-weight: 500;
         }
 
         .link a:hover {
             text-decoration: underline;
         }
+
+        .error-list {
+            background-color: #fbe9e7;
+            border-left: 4px solid #d84315;
+            padding: 12px 18px;
+            margin-bottom: 25px;
+            border-radius: 6px;
+            color: #bf360c;
+            font-size: 14px;
+        }
+
+        .error-list li {
+            margin-bottom: 6px;
+            list-style: disc inside;
+        }
     </style>
 </head>
 <body>
     <div class="container">
-        <h1>Welcome to MindSafe</h1>
+        <h1>Регистрация в MindSafe</h1>
         <form method="POST">
             {% csrf_token %}
+
+            {% if form.errors %}
+                <ul class="error-list">
+                    {% for field in form %}
+                        {% for error in field.errors %}
+                            <li><strong>{{ field.label }}:</strong> {{ error }}</li>
+                        {% endfor %}
+                    {% endfor %}
+                    {% for error in form.non_field_errors %}
+                        <li>{{ error }}</li>
+                    {% endfor %}
+                </ul>
+            {% endif %}
+
             <div class="form-group">
-                <label for="id_username">Username</label>
+                <label for="id_username">Имя пользователя</label>
                 {{ form.username }}
             </div>
 
             <div class="form-group">
-                <label for="id_email">Email Address</label>
+                <label for="id_email">Электронная почта</label>
                 {{ form.email }}
             </div>
 
             <div class="form-group">
-                <label for="id_password1">Password</label>
+                <label for="id_password1">Пароль</label>
                 {{ form.password1 }}
             </div>
 
             <div class="form-group">
-                <label for="id_password2">Confirm Password</label>
+                <label for="id_password2">Подтверждение пароля</label>
                 {{ form.password2 }}
             </div>
 
-            <button type="submit">Register</button>
+            <button type="submit">Зарегистрироваться</button>
         </form>
 
         <div class="link">
-            <p>Already have an account? <a href="{% url 'login' %}">Login here</a></p>
+            <p>Уже есть аккаунт? <a href="{% url 'login' %}">Войти</a></p>
         </div>
     </div>
 </body>

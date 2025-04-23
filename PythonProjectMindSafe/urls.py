@@ -1,16 +1,15 @@
 from django.contrib import admin
 from django.urls import path, include
 from django.contrib.auth import views as auth_views
-from two_factor.urls import urlpatterns as tf_urls  # URL для двухфакторной аутентификации
-from tasks import views  # Импортируем views из приложения tasks
+from two_factor.urls import urlpatterns as tf_urls
 
 urlpatterns = [
+    # Админка
     path('admin/', admin.site.urls),
-    path('', include('tasks.urls')),
+
     # Аутентификация
-    path('login/', auth_views.LoginView.as_view(), name='login'),
+    path('login/', auth_views.LoginView.as_view(template_name='registration/login.html'), name='login'),
     path('logout/', auth_views.LogoutView.as_view(), name='logout'),
-    path('register/', views.register_view, name='register'),
 
     # Восстановление пароля
     path('password_reset/', auth_views.PasswordResetView.as_view(), name='password_reset'),
@@ -18,16 +17,11 @@ urlpatterns = [
     path('reset/<uidb64>/<token>/', auth_views.PasswordResetConfirmView.as_view(), name='password_reset_confirm'),
     path('reset/done/', auth_views.PasswordResetCompleteView.as_view(), name='password_reset_complete'),
 
-    # Двухфакторная аутентификация
-    path('two-factor/', include(tf_urls)),
+    # Двухфакторная аутентификация (рекомендуем разместить на отдельном префиксе)
+    path('account/', include(tf_urls)),
 
-    # Основные страницы
-    path('', views.home, name='home'),
-    path('profile/', views.user_profile, name='user_profile'),
-    path('create-entry/', views.create_entry, name='create_entry'),  # ← Вот это добавляем
-    path('edit-entry/<int:pk>/', views.edit_entry, name='edit_entry'),
-    path('delete-entry/<int:pk>/', views.delete_entry, name='delete_entry'),
-    path('category/<int:category_id>/', views.entries_by_category, name='entries_by_category'),
-    path('tag/<int:tag_id>/', views.entries_by_tag, name='entries_by_tag'),
+    # Основное приложение
+    path('', include('tasks.urls')),
 
+   
 ]
