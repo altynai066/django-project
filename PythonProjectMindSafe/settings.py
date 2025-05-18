@@ -40,27 +40,30 @@ INSTALLED_APPS = [
     'tasks',
     'django.contrib.sites',
     'django_otp',
+    'django_otp.plugins.otp_totp',
+    'django_otp.plugins.otp_static',
     'two_factor',
 ]
 
 MIDDLEWARE = [
-    'django.middleware.security.SecurityMiddleware',
-    'django.contrib.sessions.middleware.SessionMiddleware',
-    'django.middleware.common.CommonMiddleware',
-    'django.middleware.csrf.CsrfViewMiddleware',
-    'django.contrib.auth.middleware.AuthenticationMiddleware',
-    'django.contrib.messages.middleware.MessageMiddleware',
-    'django.middleware.clickjacking.XFrameOptionsMiddleware',
-    'django_otp.middleware.OTPMiddleware',
+    'django.middleware.security.SecurityMiddleware',  # Безопасность (HTTPS, заголовки)
+    'django.contrib.sessions.middleware.SessionMiddleware',  # Управление сессиями
+    'django.middleware.common.CommonMiddleware',  # Обработка URL и 404/500
+    'django.middleware.csrf.CsrfViewMiddleware',  # Защита от CSRF
+    'django.contrib.auth.middleware.AuthenticationMiddleware',  # Базовая аутентификация
+    'django_otp.middleware.OTPMiddleware',  # Проверка 2FA
+    'django.contrib.messages.middleware.MessageMiddleware',  # Обработка сообщений
+    'django.middleware.clickjacking.XFrameOptionsMiddleware',  # Защита от кликджекинга
 ]
 LOGIN_URL = 'two_factor:login'
+TWO_FACTOR_ALWAYS_ENFORCE = True
 
 ROOT_URLCONF = 'PythonProjectMindSafe.urls'
 
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [BASE_DIR / "templates"],
+        'DIRS': [],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -127,10 +130,6 @@ STATIC_URL = 'static/'
 # https://docs.djangoproject.com/en/5.1/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
-AUTHENTICATION_BACKENDS = (
-    'django.contrib.auth.backends.ModelBackend',  # По умолчанию
-)
-
 # Использовать email в качестве имени пользователя
 AUTHENTICATION_BACKENDS = (
     'django.contrib.auth.backends.ModelBackend',

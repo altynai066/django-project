@@ -15,3 +15,7 @@ class EntryForm(forms.ModelForm):
     class Meta:
         model = Entry
         fields = ['title', 'content', 'tags', 'password', 'description', 'priority', 'status', 'category']
+
+
+class EntryPasswordForm(forms.Form):
+    password = forms.CharField(widget=forms.PasswordInput, label='Введите пароль')
