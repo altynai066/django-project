@@ -8,7 +8,7 @@ urlpatterns = [
     path('admin/', admin.site.urls),
 
     # Аутентификация
-    path('login/', auth_views.LoginView.as_view(), name='login'),
+    path('login/', views.login_view, name='login'),
     path('logout/', auth_views.LogoutView.as_view(), name='logout'),
     path('register/', views.register_view, name='register'),
 
@@ -26,5 +26,6 @@ urlpatterns = [
     path('profile/', views.user_profile, name='user_profile'),
     path('create-entry/', views.create_entry, name='create_entry'),  # ← Вот это добавляем
     path('edit-entry/<int:pk>/', views.edit_entry, name='edit_entry'),
+    path('edit-entry/<int:pk>/password-enter/', views.enter_password, name='enter_password'),
     path('delete-entry/<int:pk>/', views.delete_entry, name='delete_entry'),
 ]
